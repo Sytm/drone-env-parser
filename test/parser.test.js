@@ -10,14 +10,8 @@ const exampleEnvs = {
 };
 
 const expectedReturn = {
-    repo: [
-        'test-repo'
-    ],
-    names: [
-        'one',
-        'two',
-        'three'
-    ],
+    repo: 'test-repo',
+    names: 'one,two,three',
     users: {
         'lukas': {
             age: 16,
@@ -93,9 +87,7 @@ describe( 'Parser', function () {
                 assert.deepStrictEqual( parseEnvs( {
                     makeNameLowerCase: false
                 } ), {
-                    TEST: [
-                        'a string'
-                    ]
+                    TEST: 'a string'
                 } );
             } finally {
                 delete process.env[ 'PLUGIN_TEST' ];
@@ -108,9 +100,7 @@ describe( 'Parser', function () {
                 assert.deepStrictEqual( parseEnvs( {
                     prefix: 'EXTENSION_'
                 } ), {
-                    test: [
-                        'a string'
-                    ]
+                    test: 'a string'
                 } );
             } finally {
                 delete process.env[ 'EXTENSION_TEST' ];
