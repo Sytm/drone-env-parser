@@ -7,7 +7,20 @@ steps:
    commands:
     - npm ci
     - npm test
- - name: publish
+ - name: Publish-Private
+   image: plugins/npm
+   when:
+    event:
+     - tag
+   settings:
+    username:
+      from_secret: npm_private_username
+    password:
+      from_secret: npm_private_password
+    email:
+      from_secret: npm_private_email
+    registry: "https://repo.sytm.de/repository/npm-hosted/"
+ - name: Publish-Hosted
    image: plugins/npm
    when:
     event:
@@ -19,6 +32,5 @@ steps:
       from_secret: npm_password
     email:
       from_secret: npm_email
-    registry: "https://repo.sytm.de/repository/npm-hosted/"
       
   

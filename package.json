@@ -1,6 +1,6 @@
 {
   "name": "drone-env-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple parser that converts drones PLUGIN_ environment variables to a simple js object",
   "main": "index.js",
   "scripts": {
