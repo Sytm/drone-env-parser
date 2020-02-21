@@ -9,9 +9,7 @@ This simple package allows you to conveniently parse the environment variables g
 The most basic usage of this package looks like this:
 
 ```javascript
-const settings = require('drone-env-parser').parseEnvs({
-    splitOnComma: false
-});
+const settings = require('drone-env-parser').parseEnvs();
 // Now you can access your settings simply by referencing them like this for example:
 Webservice.auth(settings.username, settings.password);
 ```
@@ -42,9 +40,9 @@ It gets encoded by drone into comma separated values and the environment variabl
 ```
 PLUGIN_A_LIST=element 1,element 2,element 3
 ```
-So if you enable splitOnComma (which is enabled by default) it will split every top level string at every comma. A side effect of this is, that every top level string will be a array.
+So if you enable splitOnComma (which is disabled by default) it will split every top level string at every comma. A side effect of this is, that every top level string will be an array.
 
-If this behaviour is not desired, you can disable it by setting `splitOnComma: false`.
+If this behaviour is desired, you can enable it by setting `splitOnComma: true`.
 
 ## Making names lowercase
 

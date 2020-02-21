@@ -5,7 +5,7 @@ const extend = require( 'extend' );
 const defaults = {
     prefix: 'PLUGIN_',
     makeNameLowerCase: true,
-    splitOnComma: true
+    splitOnComma: false
 };
 
 function parseEnvs( options, variables ) {
