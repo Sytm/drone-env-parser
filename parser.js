@@ -1,49 +1,48 @@
 'use strict';
 
-const extend = require('extend');
+const extend = require( 'extend' );
 
 const defaults = {
     prefix: 'PLUGIN_',
-    makeNameLowerCase:  true,
+    makeNameLowerCase: true,
     splitOnComma: true
 };
 
-function parseEnvs(options, variables) {
-    let opts = extend({}, defaults, options);
+function parseEnvs( options, variables ) {
+    let opts = extend( {}, defaults, options );
 
-    let env = variables || process.env;
+    let env = process.env;
 
-    env = env.filter(str => str.startsWith(opts.prefix)).map(str => parseEnvVariable(opts, str));    
+    env = Object.keys( env ).filter( str => str.startsWith( opts.prefix ) ).map( str => parseEnvVariable( opts, str ) );
 
     let root = {};
 
-    env.forEach(env => {
+    env.forEach( env => {
         try {
-            let obj = JSON.parse(env.content);
-            root[env.name] = obj;
+            let obj = JSON.parse( env.content );
+            root[ env.name ] = obj;
         } catch {
-            if (opts.splitOnComma) {
-                root[env.name] = env.content.split(',');
+            if ( opts.splitOnComma ) {
+                root[ env.name ] = env.content.split( ',' );
             } else {
-                root[env.name] = env.content;
+                root[ env.name ] = env.content;
             }
         }
-    });
+    } );
 
     return root;
 }
 
-function parseEnvVariable(opts, str) {
-    str = str.substr(opts.prefix.length);
-    let index = str.indexOf('=');
-    let name = str.substr(0, index);
-    if (opts.makeNameLowerCase) {
+function parseEnvVariable( opts, str ) {
+    let content = process.env[ str ];
+    let name = str.substr( opts.prefix.length );
+    if ( opts.makeNameLowerCase ) {
         name = name.toLowerCase();
     }
     return {
         name,
-        content: str.substr(index + 1)
-    };
+        content
+    }
 }
 
 exports.parseEnvs = parseEnvs;
