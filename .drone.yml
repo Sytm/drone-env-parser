@@ -1,0 +1,21 @@
+kind: pipeline
+name: Default
+
+steps:
+ - name: test
+   image: node:alpine
+   commands:
+    - npm ci
+    - npm test
+ - name: publish
+   image: plugins/npm
+   settings:
+    username:
+      from_secret: npm_username
+    password:
+      from_secret: npm_password
+    email:
+      from_secret: npm_email
+    registry: "https://repo.sytm.de/repository/npm-hosted/"
+      
+  
