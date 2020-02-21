@@ -9,6 +9,9 @@ steps:
     - npm test
  - name: publish
    image: plugins/npm
+   when:
+    event:
+     - tag
    settings:
     username:
       from_secret: npm_username
