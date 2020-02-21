@@ -21,9 +21,6 @@
     "@types/node": "^13.7.4",
     "mocha": "^7.0.1"
   },
-  "publishConfig": {
-    "registry": "https://repo.sytm.de/repository/npm-hosted/"
-  },
   "dependencies": {
     "extend": "^3.0.2"
   }
