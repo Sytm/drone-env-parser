@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@sytm.de:Sytm/drone-env-parser.git"
+    "url": "https://git.sytm.de/Sytm/drone-env-parser.git"
   },
   "keywords": [
     "drone",
