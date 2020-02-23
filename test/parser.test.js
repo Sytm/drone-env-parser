@@ -128,6 +128,36 @@ describe( 'Parser', function () {
                 restore();
             }
         } );
+        it( 'should extend upon the default values provided', function () {
+            let restore = mockedEnv( {
+                PLUGIN_OVERWRITTEN: 'another value',
+                PLUGIN_MIXED: JSON.stringify( {
+                    overwritten: 'not the same anymore'
+                } )
+            } );
+            try {
+                let parsed = parseEnvs( {
+                    defaults: {
+                        keep: 'this value should be kept',
+                        mixed: {
+                            keep: 'kept',
+                            overwritten: 'overwritten'
+                        },
+                        overwritten: 'this value should be overwritten'
+                    }
+                } );
+                assert.deepStrictEqual( parsed, {
+                    keep: 'this value should be kept',
+                    mixed: {
+                        keep: 'kept',
+                        overwritten: 'not the same anymore'
+                    },
+                    overwritten: 'another value'
+                } );
+            } finally {
+                restore();
+            }
+        } );
         it( 'should parse the example variables correctly with the default settings', function () {
             let restore = mockedEnv( {
                 ...exampleEnvs

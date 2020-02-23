@@ -2,14 +2,15 @@
 
 const extend = require( 'extend' );
 
-const defaults = {
+const defaultOptions = {
     prefix: 'PLUGIN_',
     makeNameLowerCase: true,
-    splitOnComma: false
+    splitOnComma: false,
+    defaults: {}
 };
 
-function parseEnvs( options, variables ) {
-    let opts = extend( {}, defaults, options );
+function parseEnvs( options ) {
+    let opts = extend( true, {}, defaultOptions, options );
 
     let env = process.env;
 
@@ -30,7 +31,7 @@ function parseEnvs( options, variables ) {
         }
     } );
 
-    return root;
+    return extend( true, {}, opts.defaults, root );
 }
 
 function parseEnvVariable( opts, str ) {

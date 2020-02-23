@@ -23,6 +23,18 @@ const settings = require('drone-env-parser').parseEnvs({
 });
 ```
 
+## Defaults
+
+You can provide default values that will be overwritten by the values parsed from the environment variables
+
+```javascript
+let settings = rquire('drone-env-parser').parseEnvs({
+  defaults: {
+    // define defaults here
+  }
+});
+```
+
 ## Splitting on comma:
 
 If in the .drone.yml a list is provided at the top level like this:
