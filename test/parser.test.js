@@ -1,5 +1,6 @@
 'use strict';
 
+const mockedEnv = require( 'mocked-env' );
 const assert = require( 'assert' );
 
 const exampleEnvs = {
@@ -54,20 +55,22 @@ const parseEnvs = require( '../parser' ).parseEnvs;
 describe( 'Parser', function () {
     describe( '#parseEnvs()', function () {
         it( 'shouldn\'t split top-level strings into arrays if disabled', function () {
+            let restore = mockedEnv( {
+                PLUGIN_TEST: 'one,two,three'
+            }, { clear: true } );
             try {
-                process.env[ 'PLUGIN_TEST' ] = 'one,two,three';
                 assert.deepStrictEqual( parseEnvs( {
                     splitOnComma: false
                 } ), {
                     test: 'one,two,three'
                 } );
             } finally {
-                delete process.env[ 'PLUGIN_TEST' ];
+                restore();
             }
         } );
         it( 'should split top-level strings into arrays if enabled', function () {
+            let restore = mockedEnv( { PLUGIN_TEST: 'one,two,three' }, { clear: true } );
             try {
-                process.env[ 'PLUGIN_TEST' ] = 'one,two,three';
                 assert.deepStrictEqual( parseEnvs( {
                     splitOnComma: true
                 } ), {
@@ -78,65 +81,61 @@ describe( 'Parser', function () {
                     ]
                 } );
             } finally {
-                delete process.env[ 'PLUGIN_TEST' ];
+                restore();
             }
         } );
         it( 'should keep the upper-case names intact of the top-level properties if enabled', function () {
+            let restore = mockedEnv( { PLUGIN_TEST: 'a string' }, { clear: true } );
             try {
-                process.env[ 'PLUGIN_TEST' ] = 'a string';
                 assert.deepStrictEqual( parseEnvs( {
                     makeNameLowerCase: false
                 } ), {
                     TEST: 'a string'
                 } );
             } finally {
-                delete process.env[ 'PLUGIN_TEST' ];
+                restore();
             }
         } );
         it( 'should use the provided prefix for the environment variables if provided', function () {
+            let restore = mockedEnv( { EXTENSION_TEST: 'a string', PLUGIN_THIS: 'won\t be parsed' }, { clear: true } );
             try {
-                process.env[ 'EXTENSION_TEST' ] = 'a string';
-                process.env[ 'PLUGIN_THIS' ] = 'won\'t be parsed';
                 assert.deepStrictEqual( parseEnvs( {
                     prefix: 'EXTENSION_'
                 } ), {
                     test: 'a string'
                 } );
             } finally {
-                delete process.env[ 'EXTENSION_TEST' ];
-                delete process.env[ 'PLUGIN_THIS' ];
+                restore();
             }
         } );
         it( 'should parse json objects properly', function () {
+            let obj = { name: 'property' };
+            let restore = mockedEnv( { PLUGIN_OBJ: JSON.stringify( obj ) }, { clear: true } );
             try {
-                let obj = { name: 'property' };
-                process.env[ 'PLUGIN_OBJ' ] = JSON.stringify( obj );
                 let parsed = parseEnvs();
                 assert.deepStrictEqual( parsed.obj, obj );
             } finally {
-                delete process.env[ 'PLUGIN_OBJ' ];
+                restore();
             }
         } );
         it( 'should parse json arrays properly', function () {
+            let arr = [ 1, 2, 3 ];
+            let restore = mockedEnv( { PLUGIN_ARR: JSON.stringify( arr ) }, { clear: true } );
             try {
-                let arr = [ 1, 2, 3 ];
-                process.env[ 'PLUGIN_ARR' ] = JSON.stringify( arr );
                 let parsed = parseEnvs();
                 assert.deepStrictEqual( parsed.arr, arr );
             } finally {
-                delete process.env[ 'PLUGIN_ARR' ];
+                restore();
             }
         } );
         it( 'should parse the example variables correctly with the default settings', function () {
+            let restore = mockedEnv( {
+                ...exampleEnvs
+            }, { clear: true } );
             try {
-                Object.keys( exampleEnvs ).forEach( key => {
-                    process.env[ key ] = exampleEnvs[ key ];
-                } );
                 assert.deepStrictEqual( parseEnvs(), expectedReturn );
             } finally {
-                Object.keys( exampleEnvs ).forEach( key => {
-                    delete process.env[ key ];
-                } );
+                restore();
             }
         } );
     } );

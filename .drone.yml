@@ -2,22 +2,20 @@ kind: pipeline
 name: default
 
 steps:
- - name: test
-   image: node:alpine
-   commands:
-    - npm ci
-    - npm test
- - name: publish
-   image: plugins/npm
-   when:
-    event:
-     - tag
-   settings:
-    username:
-      from_secret: npm_username
-    password:
-      from_secret: npm_password
-    email:
-      from_secret: npm_email
-      
-  
+  - name: test
+    image: node:alpine
+    commands:
+      - npm ci
+      - npm test
+  - name: publish
+    image: plugins/npm
+    when:
+      event:
+        - tag
+    settings:
+      username:
+        from_secret: npm_username
+      password:
+        from_secret: npm_password
+      email:
+        from_secret: npm_email
