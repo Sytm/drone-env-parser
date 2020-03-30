@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "prettier": "prettier --check .",
-    "test": "c8 --reporter none mocha",
-    "prepare-coverage": "c8 report --reporter lcovonly"
+    "test": "c8 --reporter lcovonly mocha"
   },
   "repository": {
     "type": "git",

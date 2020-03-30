@@ -12,7 +12,6 @@ steps:
     image: node:12-alpine
     commands:
       - npm run test
-      - npm run prepare-coverage
   - name: upload coverage
     image: md5lukas/drone-coveralls
     settings:
