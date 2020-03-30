@@ -14,7 +14,7 @@ steps:
       - npm run test
       - npm run prepare-coverage
   - name: upload coverage
-    image: md5lukas/drone-coveralls
+    image: md5lukas/drone-coveralls:0.1
     settings:
       token:
         from_secret: coveralls_token
