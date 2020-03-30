@@ -2,13 +2,24 @@ kind: pipeline
 name: default
 
 steps:
-  - name: test
-    image: node:alpine
+  - name: lint
+    image: node:12-alpine
     commands:
       - npm ci
       - npm run lint
       - npm run prettier
-      - npm test
+  - name: test
+    image: node:12-alpine
+    commands:
+      - npm run test
+      - npm run prepare-coverage
+  - name: upload coverage
+    image: lizheming/drone-coveralls
+    settings:
+      token:
+        from_secret: coveralls_token
+      files:
+        - ./coverage/lcov.info
   - name: publish
     image: plugins/npm
     settings:

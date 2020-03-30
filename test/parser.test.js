@@ -43,7 +43,7 @@ const expectedReturn = {
   ],
 };
 
-const parseEnvs = require("../parser").parseEnvs;
+const parseEnvs = require("../").parseEnvs;
 
 describe("Parser", function () {
   describe("#parseEnvs()", function () {

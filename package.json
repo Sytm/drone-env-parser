@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "prettier": "prettier --check .",
-    "test": "mocha"
+    "test": "c8 --reporter none mocha",
+    "prepare-coverage": "c8 report --reporter lcovonly"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "@types/node": "^13.7.4",
+    "c8": "^7.1.0",
     "eslint": "^6.8.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.0",
