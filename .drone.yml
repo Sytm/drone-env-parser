@@ -6,12 +6,11 @@ steps:
     image: node:alpine
     commands:
       - npm ci
+      - npm run lint
+      - npm run prettier
       - npm test
   - name: publish
     image: plugins/npm
-    when:
-      event:
-        - tag
     settings:
       username:
         from_secret: npm_username
@@ -19,3 +18,11 @@ steps:
         from_secret: npm_password
       email:
         from_secret: npm_email
+    when:
+      event:
+        - tag
+
+trigger:
+  branch:
+    exclude:
+      - dependabot/**

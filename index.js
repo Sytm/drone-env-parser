@@ -1,1 +1,1 @@
-exports.parseEnvs = require('./parser').parseEnvs;
+exports.parseEnvs = require("./parser").parseEnvs;
